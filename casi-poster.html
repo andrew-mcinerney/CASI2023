@@ -83,7 +83,7 @@ Font-awesome icons ie github or twitter
 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--
 Google fonts api stuff
 -->
@@ -133,11 +133,11 @@ margin-bottom: 1em;
 }
 code.sourceCode.r{
 background-color: transparent;
-font-size: 25pt;
+font-size: 28pt;
 border-radius: 2mm;
 }
 code {
-font-size: 25pt;
+font-size: 24pt;
 font-family: monospace;
 background-color: #20386424;
 color: #203864;
@@ -177,7 +177,7 @@ font-style: italic;
 padding-top: 0;
 }
 .references {
-font-size: 20px;
+font-size: 32pt;
 line-height: 90%;
 }
 /* Create three unequal columns that floats next to each other */
@@ -319,13 +319,13 @@ color: #ffffff90;
 }
 #main-img-left {
 width: 70%;
-left: 0.0in;
-bottom: 0.0in;
+left: 0.5in;
+bottom: 0.2in;
 position: absolute;
 }
 #main-img-center {
 width: 10%;
-left: calc(33.1in * 0.45);
+left: calc(33.1in * 0.75);
 bottom: 0.5in;
 position: absolute;
 }
@@ -333,6 +333,19 @@ position: absolute;
 width: 10%;
 right: 0.5in;
 bottom: 0.2in;
+position: absolute;
+}
+#main-img-top-right {
+width: 20%;
+right: 0in;
+top: 0in;
+position: absolute;
+}
+
+#main-img-top-left {
+width: 20%;
+left: 0.5in;
+top: 0.2in;
 position: absolute;
 }
 .main p {
@@ -356,6 +369,11 @@ font-size: 50pt;
 text-decoration: none;
 }
 .github, i {
+color: #00000030;
+font-size: 50pt;
+text-decoration: none;
+}
+.website, i {
 color: #00000030;
 font-size: 50pt;
 text-decoration: none;
@@ -439,9 +457,12 @@ span > #tab:mytable {
 
 <a class="github" href="https://github.com/andrew-mcinerney"><i class="fab fa-github"></i>&nbsp;&nbsp;@andrew-mcinerney</a><br>
 
+
 <a class='envelope'><i class="fas fa-envelope"></i></a> <a href="mailto:andrew.mcinerney@ul.ie" class="email">andrew.mcinerney@ul.ie</a> <br>
  Kevin Burke<sup> 1</sup><br>
 
+
+<a class="website" href="https://kevinburke.ie"><i class="fas fa-globe"></i>&nbsp;&nbsp;kevinburke.ie</a><br>
 
 </h3>
 
@@ -454,99 +475,139 @@ span > #tab:mytable {
 </p>
 </div>
 
+<p> </p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Currently, there are around 80 packages available on the Comprehensive R Archive Network (CRAN) that allow for the fitting of neural networks.
-Some of the more popular packages are <strong>nnet</strong> <span class="citation">(<a href="#ref-nnet" role="doc-biblioref">Ripley and Venables 2022</a>)</span>, <strong>neuralnet</strong> <span class="citation">(<a href="#ref-neuralnet" role="doc-biblioref">Fritsch, Guenther, and Wright 2019</a>)</span>, <strong>keras</strong> <span class="citation">(<a href="#ref-keras" role="doc-biblioref">Allaire and Chollet 2023</a>)</span>, and <strong>torch</strong> <span class="citation">(<a href="#ref-torch" role="doc-biblioref">Falbel and Luraschi 2023</a>)</span>.
-The goal of our R package, , is to extend some of the existing R packages for neural networks to allow for more useful and insightful statistical-based methods and outputs.
-This not only increases the utility of neural networks for statisticians, but it also bridges the gap between the explainability and flexibility of neural networks.
-This package, to the best of our knowledge, is the first package in R that provides these statistically-based summaries for neural networks.</p>
+<ul>
+<li>Many neural network R packages available:
+<strong>nnet</strong> (<a href="https://CRAN.R-project.org/package=nnet">Ripley and Venables, 2022</a>), <strong>neuralnet</strong> (<a href="https://CRAN.R-project.org/package=neuralnet">Fritsch, Guenther, and Wright, 2019</a>), <strong>keras</strong> (<a href="https://CRAN.R-project.org/package=keras">Allaire and Chollet, 2023</a>), and <strong>torch</strong> (<a href="https://CRAN.R-project.org/package=torch">Falbel and Luraschi, 2023</a>).</li>
+<li>Goal of our <strong>interpretnn</strong> package: Allow for more useful and insightful statistical-based methods and outputs.</li>
+<li>We embed neural networks within likelihood estimation, providing model selection and significance testing.</li>
+<li>This bridges the gap between the explainability and flexibility of neural networks.</li>
+</ul>
+<p> </p>
 </div>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
-<p>You can install the development version of <strong>statnn</strong> from <a href="https://github.com/">GitHub</a> with:</p>
+<ul>
+<li>You can install the development version of <strong>interpretnn</strong> from <a href="https://github.com/">GitHub</a> with:</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;devtools&quot;)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;andrew-mcinerney/statnn&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;andrew-mcinerney/interpretnn&quot;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p> </p>
 </div>
 <div id="implementation" class="section level1">
 <h1>Implementation</h1>
-<p>The use of <strong>statnn</strong> is explained through a real-data application.
-Here, we use the Boston Housing dataset, and we use the <strong>nnet</strong> function for fitting our neural network.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(statnn)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(100)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">nn_fit</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> medv <span class="sc">~</span> ., <span class="at">data =</span> Boston,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">q =</span> <span class="dv">2</span>, <span class="at">n_init =</span> <span class="dv">10</span>, <span class="at">pkg =</span> <span class="st">&quot;nnet&quot;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>We can then convert the fitted neural network to an object of class <code>"statnn"</code> using</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stnn <span class="ot">&lt;-</span> <span class="fu">statnn</span>(nn)</span></code></pre></div>
+<ul>
+<li>Example: Boston Housing dataset.</li>
+<li>First, we fit the data using the <strong>nnet</strong> package.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interpretnn)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(100)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">nnet</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">2</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">linout =</span> <span class="cn">TRUE</span>, <span class="at">maxit =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<p> </p>
+<ul>
+<li>Then, convert this to an <code>"interpretnn"</code> object using
+the <code>interpretnn()</code> function.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>intnn <span class="ot">&lt;-</span> <span class="fu">interpretnn</span>(nn, <span class="at">data =</span> Boston)</span></code></pre></div>
+<p> 
+ </p>
 </div>
 <div id="model-summary" class="section level1">
 <h1>Model Summary</h1>
-<p>The <code>summary()</code> method can then be used on the new object, <code>stnn</code>, to get a useful, statistical-based summary table for the neural network, similar to that of other regression models in R.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stnn)</span></code></pre></div>
-<pre><code>## [...]
-## Coefficients:
-##                                        Wald
-##          Estimate Std. Error |       X^2    Pr(&gt; X^2)
-##     crim -0.50367   0.081495 |  15.86103 3.60e-04 ***
-##       zn  0.89640   0.080631 |   7.13194 2.83e-02 *  
-##    indus -0.85112   0.069471 |   0.10822 9.47e-01    
-##     chas  0.71421   0.197013 |   8.12925 1.72e-02 *  
-##      nox -0.71383   0.083767 |  16.20045 3.03e-04 ***
-##       rm  0.94949   0.075320 | 102.72926 0.00e+00 ***
-##      age -0.70553   0.075340 |   1.54725 4.61e-01    
-##      dis  0.58585   0.092786 |  39.16725 3.13e-09 ***
-##      rad -0.48035   0.086820 |  41.56443 9.43e-10 ***
-##      tax -0.76588   0.076431 |  10.40137 5.51e-03 ** 
-##  ptratio -0.93611   0.067431 |  19.46303 5.94e-05 ***
-##    lstat -1.27902   0.057990 |  59.52595 1.19e-13 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39;
-## 0.1 &#39; &#39; 1
-## 
-## [...]</code></pre>
-<p>The <code>plotnn()</code> function is used to visualise results of the single- and multiple-parameter Wald tests in a diagram of the neural network architecture.
-The significance level can be changed using the <code>alpha</code> argument (default: 0.05).
-By default, significant weights and nodes are coloured black and insignificant weights and nodes are coloured light grey.
-The intercept terms can be displayed by setting <code>intercept = TRUE</code> (default: <code>FALSE</code>).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotnn</span>(stnn)</span></code></pre></div>
-<p><img src="casi-poster_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>The <code>plotci()</code> function is used to visualise the Wald (1 - <span class="math inline">\(\alpha\)</span>)100% single-parameter confidence intervals and the Wald (1 - <span class="math inline">\(\alpha\)</span>)100% joint confidence ellipses for the input-to-hidden-layer weights for each covariate.
-The <code>which</code> argument specifies which covariate’s confidence intervals are to be displayed (default: <code>NULL</code>, displays plots for all covariates).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotci</span>(stnn, <span class="at">which =</span> <span class="dv">7</span>)</span></code></pre></div>
+<ul>
+<li>Now, with the <code>"interpretnn"</code> object, <code>summary()</code> produces a statistically-based model summary.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(intnn)</span></code></pre></div>
+<pre><code>[...]
+Number of input nodes: 12 
+Number of hidden nodes: 2 
+
+BIC: 606.4537 
+
+Coefficients:
+                      Weights |      X^2    Pr(&gt; X^2)
+    crim     (-0.14, -0.52**) |  15.8610 3.60e-04 ***
+      zn      (0.13**, 10.13) |   7.1319 2.83e-02 *  
+   indus           (-0.03, 0) |   0.1082 9.47e-01    
+    chas        (0.06., 0.12) |   8.1292 1.72e-02 *  
+     nox     (0.15, -1.42***) |  16.2004 3.03e-04 ***
+      rm  (0.74***, -0.88***) | 102.7293 0.00e+00 ***
+     age        (-0.05, -0.2) |   1.5472 4.61e-01    
+     dis (-0.35***, -1.85***) |  39.1672 3.13e-09 ***
+     rad      (0.99***, 0.31) |  41.5644 9.43e-10 ***
+     tax     (-0.13, -1.14**) |  10.4014 5.51e-03 ** 
+ ptratio   (-0.16**, -0.66**) |  19.4630 5.94e-05 ***
+   lstat (-1.38***, -0.69***) |  59.5259 1.19e-13 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39;
+0.1 &#39; &#39; 1</code></pre>
+<p> </p>
+<ul>
+<li><code>plotnn()</code> visualises the results of single- and multi-parameter Wald tests overlaid on the network architecture.</li>
+<li>By default, <code>alpha = 0.05</code>, where the weights are coloured black if they are significant, and are grey otherwise (i.e., insignificant).</li>
+<li>The intercept terms can be displayed by setting <code>intercept = TRUE</code> (default: <code>FALSE</code>).</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotnn</span>(intnn)</span></code></pre></div>
 <p><img src="casi-poster_files/figure-html/unnamed-chunk-8-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p> </p>
+<ul>
+<li><code>plotci()</code> visualises the single- and joint-parameter Wald (1 - <span class="math inline">\(\alpha\)</span>)100% confidence intervals and ellipses, respectively, for the input-to-hidden-layer weights for each covariate.</li>
+<li>The <code>which</code> argument chooses a particular covariate as the subject of this plot (the default value, <code>NULL</code>, produces a plot for each covariate).</li>
+</ul>
+<p> </p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotci</span>(intnn, <span class="at">which =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="casi-poster_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="covariate-effect-plots" class="section level1">
-<h1>Covariate Effect Plots</h1>
+<h1>Covariate-Effect Plots</h1>
+<ul>
+<li><code>plot()</code> is used to display the covariate effects.</li>
+<li>To visualise the associated uncertainty, the <code>conf_int</code> argument can be set to <code>TRUE</code>.</li>
+<li>As before, <code>which</code> chooses a particular covariate as the subject of this plot (default: <code>NULL</code> produces a plot for each covariate).</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(intnn, <span class="at">which =</span> <span class="dv">12</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">conf_int =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="casi-poster_files/figure-html/plot_intnn-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p> </p>
+</div>
+<div id="acknowledgments" class="section level1">
+<h1>Acknowledgments</h1>
+<p>This work has emanated from research conducted with the financial support of Science Foundation Ireland (SFI) under Grant Number SFI 18/CRT/6049.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-keras" class="csl-entry">
-Allaire, JJ, and François Chollet. 2023. <em>Keras: R Interface to <span>“Keras”</span></em>. <a href="https://CRAN.R-project.org/package=keras">https://CRAN.R-project.org/package=keras</a>.
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-interpretnn" class="csl-entry">
+McInerney, A., &amp; Burke, K. (2022a). <em>Interpretnn: Interpreting feedforward neural networks as statistical models</em>. Retrieved from <a href="https://github.com/andrew-mcinerney/interpretnn">https://github.com/andrew-mcinerney/interpretnn</a>
 </div>
-<div id="ref-torch" class="csl-entry">
-Falbel, Daniel, and Javier Luraschi. 2023. <em>Torch: Tensors and Neural Networks with ’GPU’ Acceleration</em>. <a href="https://CRAN.R-project.org/package=torch">https://CRAN.R-project.org/package=torch</a>.
+<div id="ref-selectnn" class="csl-entry">
+McInerney, A., &amp; Burke, K. (2022b). <em>Selectnn: A statistically-based approach to neural network model selection</em>. Retrieved from <a href="https://github.com/andrew-mcinerney/selectnn">https://github.com/andrew-mcinerney/selectnn</a>
 </div>
-<div id="ref-neuralnet" class="csl-entry">
-Fritsch, Stefan, Frauke Guenther, and Marvin N. Wright. 2019. <em>Neuralnet: Training of Neural Networks</em>. <a href="https://CRAN.R-project.org/package=neuralnet">https://CRAN.R-project.org/package=neuralnet</a>.
+<div id="ref-statistically" class="csl-entry">
+McInerney, A., &amp; Burke, K. (2022c). <a href="https://doi.org/10.48550/ARXIV.2207.04248">A statistically-based approach to feedforward neural network model selection</a>. <em>arXiv preprint arXiv:2207.04248</em>.
 </div>
-<div id="ref-nnet" class="csl-entry">
-Ripley, Brian, and William Venables. 2022. <em>Nnet: Feed-Forward Neural Networks and Multinomial Log-Linear Models</em>.
+<div id="ref-interpreting" class="csl-entry">
+McInerney, A., &amp; Burke, K. (2023). Interpreting feedforward neural networks as statistical models. <em>In Preparation</em>.
 </div>
 </div>
 </div>
 
 </div>
 <div class="main">
-<p><strong>statnn</strong>: Feedforward <strong>neural networks</strong> as <strong>statistical models</strong></p>
+<p><strong>interpretnn</strong>: <strong>Interpreting</strong> feedforward <strong>neural networks</strong> as <strong>statistical models</strong></p>
+<img id="main-img-top-left" src=>
+<img id="main-img-top-right" src=>
 </div>
 <div class="main_bottom">
-<img id="main-img-left" src=figures/bottom-banner.png>
-<img id="main-img-center" src=>
+<img id="main-img-left" src=figures/banner.png>
+<img id="main-img-center" src=figures/qr-code-interpretnn.png>
 <img id="main-img-right" src=figures/logo.png>
 </div>
 </div>

@@ -1,6 +1,7 @@
 ---
 main_topsize: 0.1 #percent coverage of the poster
 main_bottomsize: 0.09
+main_subsize: 0.02
 #ESSENTIALS
 # title: '**Feedforward Neural Networks as Statistical Models**'
 poster_height: "46.8in"
@@ -12,8 +13,11 @@ twitter_textsize: "50pt"
 email_textsize: "50pt"
 sup_textsize: "32pt"
 body_textsize: "36pt"
-main_img_left_bottom: "0.0in"
-main_img_left_left: "0.0in"
+code_textsize: "28pt"
+outcode_textsize: "24pt"
+reference_textsize: "32pt"
+# main_img_left_bottom: "0.0in"
+# main_img_left_left: "0.0in"
 main_img_left_width: "70%"
 primary_colour: "#203864"
 secondary_colour: "#203864"
@@ -28,21 +32,25 @@ author:
   - name: Kevin Burke
     affil: 1
     main: true
+    website: kevinburke.ie
 affiliation:
   - num: 1
     address: Department of Mathematics & Statistics, University of Limerick
 main_findings:
-  - "**statnn**: Feedforward **neural networks** as **statistical models**"
-logoleft_name: figures/bottom-banner.png
+  - "**interpretnn**: **Interpreting** feedforward **neural networks** as **statistical models**"
+logoleft_name: figures/banner.png
 logoright_name: figures/logo.png
-# logocenter_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/qr-code-black.png
+logocenter_name: figures/qr-code-interpretnn.png
 output: 
   posterdown::posterdown_betterport:
     self_contained: false
     pandoc_args: --mathjax
     number_sections: false
-bibliography: packages.bib
+bibliography: references.bib
 link-citations: true
+nocite: |
+  @interpretnn, @selectnn, @statistically , @interpreting
+csl: http://www.zotero.org/styles/apa-5th-edition
 ---
 
 ```{r, include=FALSE}
@@ -57,98 +65,151 @@ knitr::opts_chunk$set(
 options(knitr.table.format = "html")
 ```
 
-```{r stnn, cache = TRUE}
-library(statnn)
-library(caret)
+```{r intnn, cache = TRUE}
+library(interpretnn)
 library(nnet)
-std <- caret::preProcess(Boston)
 
-X <- predict(std, Boston)[, -ncol(Boston)]
-std_y <- caret::preProcess(data.frame("medv" = Boston[, ncol(Boston)]))
-y <- as.matrix(predict(std_y, data.frame("medv" = Boston[, ncol(Boston)])))
+X <- Boston[, -ncol(Boston)]
 
 set.seed(100)
-nn <- nnet(X, y,
+nn <- nnet(medv ~ ., data = Boston,
   size = 2, trace = FALSE,
   linout = TRUE, maxit = 1000
 )
 
-stnn <- statnn(nn, X = X)
+intnn <- interpretnn(nn, X = X)
 ```
 
+&nbsp;
 
 # Introduction
 
-Currently, there are around 80 packages available on the Comprehensive R Archive Network (CRAN) that allow for the fitting of neural networks.
-Some of the more popular packages are **nnet** [@nnet], **neuralnet** [@neuralnet], **keras** [@keras], and **torch** [@torch].
-The goal of our R package, \textbf{statnn}, is to extend some of the existing R packages for neural networks to allow for more useful and insightful statistical-based methods and outputs.
-This not only increases the utility of neural networks for statisticians, but it also bridges the gap between the explainability and flexibility of neural networks.
-This package, to the best of our knowledge, is the first package in R that provides these statistically-based summaries for neural networks.
+*  Many neural network R packages available:
+ **nnet** ([Ripley and Venables, 2022](https://CRAN.R-project.org/package=nnet)), **neuralnet** ([Fritsch, Guenther, and Wright, 2019](https://CRAN.R-project.org/package=neuralnet)), **keras** ([Allaire and Chollet, 2023](https://CRAN.R-project.org/package=keras)), and **torch** ([Falbel and Luraschi, 2023](https://CRAN.R-project.org/package=torch)).
+*  Goal of our **interpretnn** package: Allow for more useful and insightful statistical-based methods and outputs.
+*  We embed neural networks within likelihood estimation, providing model selection and significance testing.
+*  This bridges the gap between the explainability and flexibility of neural networks.
 
+&nbsp;
 
 # Installation
-You can install the development version of **statnn** from [GitHub](https://github.com/) with:
+*  You can install the development version of **interpretnn** from [GitHub](https://github.com/) with:
 
 ```{r, echo = TRUE, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github(
-  "andrew-mcinerney/statnn"
+  "andrew-mcinerney/interpretnn"
   )
 ```
 
+&nbsp;
+
 # Implementation
 
-The use of **statnn** is explained through a real-data application.
-Here, we use the Boston Housing dataset, and we use the **nnet** function for fitting our neural network.
+*  Example: Boston Housing dataset.
+*  First, we fit the data using the **nnet** package.
 
 ```{r, eval = FALSE, echo = TRUE}
-library(statnn)
+library(interpretnn)
+library(nnet)
 # set.seed(100)
-nn <- nn_fit(
-  formula = medv ~ ., data = Boston,
-  q = 2, n_init = 10, pkg = "nnet"
-)
+nn <- nnet(medv ~ ., data = Boston,
+           size = 2, trace = FALSE,
+           linout = TRUE, maxit = 1000)
 ```
 
+&nbsp;
 
-We can then convert the fitted neural network to an object of class `"statnn"` using 
+*  Then, convert this to an `"interpretnn"` object using
+the `interpretnn()` function.
 
 ```{r, eval = FALSE, echo = TRUE}
-stnn <- statnn(nn)
+intnn <- interpretnn(nn, data = Boston)
 ```
+
+&nbsp;
+&nbsp;
 
 # Model Summary
 
-The `summary()` method can then be used on the new object, `stnn`, to get a useful, statistical-based summary table for the neural network, similar to that of other regression models in R.
+*  Now, with the `"interpretnn"` object, `summary()` produces a statistically-based model summary.
 
 ```{r, echo = TRUE, eval = FALSE}
-summary(stnn)
+summary(intnn)
+```
+
+```{r, comment = ''}
+library(interpretnn)
+# cat(c("[...]", capture.output(summary(intnn))[9:24],
+#       gsub('(.{1,52})(\\s|$)', '\\1\n',  capture.output(summary(intnn))[25]),
+#       "[...]")
+#     , sep = "\n")
+
+s <- summary(intnn, wald_single_par = TRUE)$coefdf
+s[, 5] <- round(s[, 5], 4)
+
+cat(c("[...]", capture.output(summary(intnn))[4:9],
+      capture.output(print(s[, c(1, 7, 4, 5, 6)], row.names = FALSE)),
+      capture.output(summary(intnn))[24],
+      gsub('(.{1,52})(\\s|$)', '\\1\n', 
+           capture.output(summary(intnn))[25]))
+    , sep = "\n")
+
+```
+
+&nbsp;
+
+*  `plotnn()` visualises the results of single- and multi-parameter Wald tests overlaid on the network architecture.
+*  By default, `alpha = 0.05`, where the weights are coloured black if they are significant, and are grey otherwise (i.e., insignificant).
+*  The intercept terms can be displayed by setting `intercept = TRUE` (default: `FALSE`).
+
+
+```{r, echo = TRUE, eval = FALSE}
+plotnn(intnn)
 ```
 
 ```{r}
-library(statnn)
-cat(c("[...]", capture.output(summary(stnn))[9:24],
-      gsub('(.{1,52})(\\s|$)', '\\1\n',  capture.output(summary(stnn))[25]),
-      "[...]")
-    , sep = "\n")
+plotnn(intnn, fontsize = 18, information = FALSE)
 ```
 
-The `plotnn()` function is used to visualise results of the single- and multiple-parameter Wald tests in a diagram of the neural network architecture.
-The significance level can be changed using the `alpha` argument (default: 0.05).
-By default, significant weights and nodes are coloured black and insignificant weights and nodes are coloured light grey.
-The intercept terms can be displayed by setting `intercept = TRUE` (default: `FALSE`).
+&nbsp;
 
-```{r, echo = TRUE}
-plotnn(stnn)
+*  `plotci()` visualises the single- and joint-parameter Wald (1 - $\alpha$)100\% confidence intervals and ellipses, respectively, for the input-to-hidden-layer weights for each covariate.
+*  The `which` argument chooses a particular covariate as the subject of this plot (the default value, `NULL`, produces a plot for each covariate).
+
+&nbsp;
+
+```{r, echo = TRUE, eval = FALSE}
+plotci(intnn, which = 12)
 ```
 
-The `plotci()` function is used to visualise the Wald (1 - $\alpha$)100\% single-parameter confidence intervals and the Wald (1 - $\alpha$)100\% joint confidence ellipses for the input-to-hidden-layer weights for each covariate.
-The `which` argument specifies which covariate's confidence intervals are to be displayed (default: `NULL`, displays plots for all covariates).
-
-```{r, echo = TRUE}
-plotci(stnn, which = 7)
+```{r, echo = FALSE}
+plotci(intnn, which = 12, cex.main = 1.6, cex.lab = 1.5, cex.axis = 1.4)
 ```
 
-# Covariate Effect Plots
+
+# Covariate-Effect Plots
+*  `plot()` is used to display the covariate effects.
+*  To visualise the associated uncertainty, the `conf_int` argument can be set to `TRUE`.
+*  As before, `which` chooses a particular covariate as the subject of this plot (default: `NULL` produces a plot for each covariate).
+
+
+
+```{r, echo = TRUE, eval = FALSE}
+plot(intnn, which = 12,
+     conf_int = TRUE)
+```
+
+
+```{r plot_intnn, cache = TRUE}
+plot(intnn, which = 12, conf_int = TRUE,
+     cex.caption = 1.6, cex.lab = 1.5, cex.axis = 1.4)
+```
+
+&nbsp;
+
+# Acknowledgments
+This work has emanated from research conducted with the financial support of Science Foundation Ireland (SFI) under Grant Number SFI 18/CRT/6049.
+
 
 # References
